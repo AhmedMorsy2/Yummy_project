@@ -1,32 +1,34 @@
-$(function () {
-  $(".loader").fadeOut(1000, function () {
-    $(".load").fadeOut(1000, function () {
-      $("body").css("overflow", "auto");
-      $(".load").remove();
+$(document).ready(() => {
+  getMealByName("").then(() => {
+    $(".loader").fadeOut(300, function () {
+      $(".load").fadeOut(300, function () {
+        $("body").css("overflow", "visible");
+      });
     });
   });
 });
+
 function openSideNav() {
-  $(".side-nav-menu").animate({ left: 0 }, 500);
-  $(".open-close-icon").removeClass("fa-align-justify ");
-  $(".open-close-icon").addClass(" fa-x");
+  $(".side-nav-menu").animate({left: 0,},500);
+
+  $(".open-close-icon").removeClass("fa-align-justify");
+  $(".open-close-icon").addClass("fa-x");
   for (let i = 0; i < 5; i++) {
-    $(".links li")
-      .eq(i)
-      .animate(
-        {
-          top: 0,
-        },
-        (i + 5) * 100
-      );
+    $(".links li").eq(i).animate({top: 0,},(i + 5) * 100);
   }
 }
+
 function closeSideNav() {
   let boxWidth = $(".side-nav-menu .nav-tab").outerWidth();
-  $(".side-nav-menu").animate({ left: -boxWidth }, 500);
+  $(".side-nav-menu").animate({left: -boxWidth,}, 500);
+
   $(".open-close-icon").addClass("fa-align-justify");
   $(".open-close-icon").removeClass("fa-x");
+
+  $(".links li").animate({top: 300,},500);
 }
+
+closeSideNav();
 $(".side-nav-menu i.open-close-icon").click(() => {
   if ($(".side-nav-menu").css("left") == "0px") {
     closeSideNav();
@@ -34,7 +36,7 @@ $(".side-nav-menu i.open-close-icon").click(() => {
     openSideNav();
   }
 });
-closeSideNav();
+
 
 const rowData = document.getElementById("rowData");
 const category = document.querySelector(".category");
@@ -46,6 +48,8 @@ const searchContainer = document.getElementById("searchContainer");
 
 // Category Functions
 async function getCategories() {
+  rowData.innerHTML = "";
+  searchContainer.innerHTML = "";
   let response = await fetch(
     `https://www.themealdb.com/api/json/v1/1/categories.php`
   );
@@ -53,7 +57,7 @@ async function getCategories() {
   displayCategories(response.categories);
 }
 function displayCategories(arr) {
-  rowData.innerHTML = ""
+  rowData.innerHTML = "";
   let cartona = "";
   for (let i = 0; i < arr.length; i++) {
     cartona += `
@@ -79,6 +83,8 @@ function displayCategories(arr) {
 }
 async function getCategoryMeals(category) {
   rowData.innerHTML = "";
+  searchContainer.innerHTML = "";
+
   let response = await fetch(
     `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
   );
@@ -165,11 +171,10 @@ async function getMealByName(mealName) {
     `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`
   );
   mealsName = await mealsName.json();
-  console.log(mealsName);
   displaySearchResult(mealsName.meals.slice(0, 20));
 }
 async function getMealByLetter(letter) {
-  rowData.innerHTML = ""
+  rowData.innerHTML = "";
   let mealLetter = await fetch(
     `https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`
   );
@@ -211,7 +216,6 @@ search.addEventListener("click", function () {
   showSearchInputs();
   closeSideNav();
 });
-
 function displayMeals(arr) {
   let cartoona = "";
   for (let i = 0; i < arr.length; i++) {
@@ -228,7 +232,6 @@ function displayMeals(arr) {
 
   rowData.innerHTML = cartoona;
 }
-
 async function getMealDetails(id) {
   closeSideNav();
   searchContainer.innerHTML = "";
@@ -239,7 +242,6 @@ async function getMealDetails(id) {
 
   displayMealDetails(respone.meals[0]);
 }
-
 function displayMealDetails(meal) {
   searchContainer.innerHTML = "";
   let ingredients = ``;
@@ -283,7 +285,6 @@ function displayMealDetails(meal) {
 
   rowData.innerHTML = cartoona;
 }
-
 // Contact us
 /*---------------------------------------------------  Validations Begin --------------------------------------------------------*/
 const nameInput = document.getElementById("nameInput");
@@ -419,8 +420,7 @@ function contactusContainer() {
                   </div>
                   <button class="btn btn-outline-danger px-2 mt-3">Submit</button>
               </div>
-              </div>
-`;
+              </div>`;
   searchContainer.innerHTML = "";
 }
 contactBtn.addEventListener("click", function () {

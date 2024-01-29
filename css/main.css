@@ -21,7 +21,6 @@
   animation: mulShdSpin 1.3s infinite linear;
   transform: translateZ(0);
 }
-
 @keyframes mulShdSpin {
   0%,
   100% {
@@ -57,7 +56,6 @@
       0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
   }
 }
-
 body {
   overflow: hidden;
   background-color: #0d0d0d;
@@ -78,6 +76,7 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
+
 .meal .meal-layer {
   top: 100%;
   left: 0;
