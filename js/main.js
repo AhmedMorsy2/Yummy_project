@@ -9,23 +9,25 @@ $(document).ready(() => {
 });
 
 function openSideNav() {
-  $(".side-nav-menu").animate({left: 0,},500);
+  $(".side-nav-menu").animate({ left: 0 }, 500);
 
   $(".open-close-icon").removeClass("fa-align-justify");
   $(".open-close-icon").addClass("fa-x");
   for (let i = 0; i < 5; i++) {
-    $(".links li").eq(i).animate({top: 0,},(i + 5) * 100);
+    $(".links li")
+      .eq(i)
+      .animate({ top: 0 }, (i + 5) * 100);
   }
 }
 
 function closeSideNav() {
   let boxWidth = $(".side-nav-menu .nav-tab").outerWidth();
-  $(".side-nav-menu").animate({left: -boxWidth,}, 500);
+  $(".side-nav-menu").animate({ left: -boxWidth }, 500);
 
   $(".open-close-icon").addClass("fa-align-justify");
   $(".open-close-icon").removeClass("fa-x");
 
-  $(".links li").animate({top: 300,},500);
+  $(".links li").animate({ top: 300 }, 500);
 }
 
 closeSideNav();
@@ -36,7 +38,6 @@ $(".side-nav-menu i.open-close-icon").click(() => {
     openSideNav();
   }
 });
-
 
 const rowData = document.getElementById("rowData");
 const category = document.querySelector(".category");
@@ -97,6 +98,8 @@ category.addEventListener("click", function () {
 });
 // Area Functions
 async function getArea() {
+  rowData.innerHTML = "";
+  searchContainer.innerHTML = "";
   let area = await fetch(
     `https://www.themealdb.com/api/json/v1/1/list.php?a=list`
   );
@@ -107,7 +110,7 @@ function displayArea(arr) {
   let cartona = "";
   for (let i = 0; i < arr.length; i++) {
     cartona += `
-    <div class="col-md-3">
+    <div class="col-md-3 d-flex justify-content-center">
       <div onclick=" getAreaMeals('${arr[i].strArea}') " "class="rounded-2 text-center cursor-pointer">
         <i class="fa-solid fa-house-laptop fa-4x"}"></i>
         <h3>${arr[i].strArea}</h3>
@@ -119,6 +122,7 @@ function displayArea(arr) {
 }
 async function getAreaMeals(area) {
   rowData.innerHTML = "";
+  searchContainer.innerHTML = "";
   let response = await fetch(
     `https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`
   );
@@ -131,6 +135,8 @@ area.addEventListener("click", function () {
 });
 // Imgredients Functions
 async function getIngredients() {
+  rowData.innerHTML = "";
+  searchContainer.innerHTML = "";
   let ingred = await fetch(
     `https://www.themealdb.com/api/json/v1/1/list.php?i=list`
   );
@@ -155,6 +161,8 @@ function displayIngredients(arr) {
   searchContainer.innerHTML = "";
 }
 async function getIngredientMeals(ing) {
+  rowData.innerHTML = "";
+  searchContainer.innerHTML = "";
   let response = await fetch(
     `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ing}`
   );
@@ -167,6 +175,7 @@ ingredients.addEventListener("click", function () {
 });
 // Search
 async function getMealByName(mealName) {
+  rowData.innerHTML = "";
   let mealsName = await fetch(
     `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`
   );
@@ -188,7 +197,7 @@ function displaySearchResult(arr) {
     <div class='col-md-3'>
     <div class="meal position-relative overflow-hidden rounded-2 cursor-pointer">
       <img class="w-100" src=${arr[i].strMealThumb} alt="">
-      <div class="search-layer position-absolute text-black p-2">
+      <div class="search-layer d-flex align-content-center justify-content-center position-absolute text-black p-2">
        <h3>${arr[i].strMeal}</h3>
        </div>
     </div>
@@ -216,6 +225,7 @@ search.addEventListener("click", function () {
   showSearchInputs();
   closeSideNav();
 });
+
 function displayMeals(arr) {
   let cartoona = "";
   for (let i = 0; i < arr.length; i++) {
@@ -223,7 +233,7 @@ function displayMeals(arr) {
       <div class="col-md-3">
               <div onclick=" getMealDetails('${arr[i].idMeal}') " class="meal position-relative overflow-hidden rounded-2 cursor-pointer">
                   <img class="w-100" src="${arr[i].strMealThumb}" alt="" srcset="">
-                  <div class="meal-layer position-absolute d-flex align-items-center text-black p-2">
+                  <div class="meal-layer position-absolute d-flex align-items-center justify-content-center text-black p-2">
                       <h3>${arr[i].strMeal}</h3>
                   </div>
               </div>
@@ -285,6 +295,7 @@ function displayMealDetails(meal) {
 
   rowData.innerHTML = cartoona;
 }
+
 // Contact us
 /*---------------------------------------------------  Validations Begin --------------------------------------------------------*/
 const nameInput = document.getElementById("nameInput");
